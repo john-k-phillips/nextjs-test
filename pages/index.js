@@ -34,22 +34,46 @@ export async function getServerSideProps() {
 const Home = ({ menu }) => {
   console.log(menu.data.menus.nodes[0].menuItems);
   const menuItems = menu.data.menus.nodes[0].menuItems.nodes.map((node) => {
-    console.log(node);
     return (
-      <li
-        className={node.parentId === null ? "text-red-500" : "bg-red-300 p-4"}
-      >
-        <a>{node.label}</a>
+      <li key={node.id}>
+        <a
+          className={`block rounded dark:text-white cursor-pointer ${
+            node.parentId === null ? "text-blue-700" : "text-green-500"
+          } ${
+            node.label === "Contact Us"
+              ? "bg-red-100 text-white p-4 rounded-xl hover:bg-red-200 "
+              : ""
+          }`}
+        >
+          {node.label}
+        </a>
       </li>
     );
   });
   return (
     <div>
-      <nav className="px-10 py-8 bg-green-200 flex place-items-center">
-        <h1 className="text-2xl mr-auto">Logo Space</h1>
-        <ul className="navigation flex place-items-center gap-8">
-          {menuItems}
-        </ul>
+      <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 mt-10">
+        <div className="container flex flex-wrap justify-between items-center mx-auto">
+          <a href="#" className="flex items-center">
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              AztecMedia
+            </span>
+          </a>
+          <button
+            data-collapse-toggle="mobile-menu"
+            type="button"
+            className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="mobile-menu-2"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Open main menu</span>
+          </button>
+          <div className="hidden w-full md:block md:w-auto" id="mobile-menu">
+            <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium place-items-center">
+              {menuItems}
+            </ul>
+          </div>
+        </div>
       </nav>
     </div>
   );
